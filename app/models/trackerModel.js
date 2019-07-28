@@ -1,14 +1,5 @@
 var Target = require('./targetModel')
 
-const weekday = new Array(7);
-weekday[0] =  "Sunday";
-weekday[1] = "Monday";
-weekday[2] = "Tuesday";
-weekday[3] = "Wednesday";
-weekday[4] = "Thursday";
-weekday[5] = "Friday";
-weekday[6] = "Saturday";
-
 var Tracker = function(){
   this.name = "My Tracker";
   this.targets = [];
@@ -20,23 +11,23 @@ var Tracker = function(){
     this.targets.push(aTarget);
   };
   this.getTargets = function(){
-    this.targets;
+    return this.targets;
   }
   this.getName = function getName(){
     return this.name;
+  }
+  this.getItemByIndex = function(index){
+    return this.targets[index];
   }
 
   this.todaysTarget = function(){
     var today = null;
     var d = new Date();
-    var daynum = d.getDay();
-    console.log(weekday[daynum] + this.targets[0].day);
+    var dayNum = d.getDay();
     for (var i = 0; i < this.targets.length ;i++) {
         var target = this.targets[i]
-        console.log(target);
-        if (target.day == weekday[daynum]){
+        if (target.dayNum == dayNum){
           today = target;
-          console.log("here");
         }
     }
     return today;

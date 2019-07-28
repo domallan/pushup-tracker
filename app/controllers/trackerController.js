@@ -1,2 +1,2 @@
 'use strict';
-var Tracker = require('../model/trackerModel.js');
+var Tracker = require('../models/trackerModel.js');
