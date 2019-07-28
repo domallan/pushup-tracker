@@ -27,10 +27,17 @@ var Tracker = function(){
     for (var i = 0; i < this.targets.length ;i++) {
         var target = this.targets[i]
         if (target.dayNum == dayNum){
-          today = target;
+          today = i;
         }
     }
-    return today;
+    return this.targets[today];
+  }
+
+  this.addPushups = function(num){
+
+    this.todaysTarget().tracked += parseInt(num);
+    console.log(this.todaysTarget)
+    return this.todaysTarget();
   }
 
 };

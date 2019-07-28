@@ -34,6 +34,8 @@ exports.todaysTarget = function(req,res){
 }
 
 exports.addPushups = function(req,res){
-  var numPushups = req.query;
-  res.send(app.trackers[0].addPushups(numPushups));
+  console.log(req.query);
+  var numPushups = req.query.num;
+  
+  res.send(app.getItemByIndex(req.params.tracker_index).addPushups(numPushups));
 }
