@@ -1,0 +1,19 @@
+{
+  "name": "pushup-tracker",
+  "version": "0.1.0",
+  "description": "Tracks progress on daily pushup targets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pushup",
+    "push-up",
+    "tracker"
+  ],
+  "author": "Dom Allan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
