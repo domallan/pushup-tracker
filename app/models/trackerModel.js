@@ -31,7 +31,12 @@ var Tracker = function(){
     return this.name;
   }
   this.getItemByIndex = function(index){
-    return this.targets[index];
+    if(this.targets[index]){
+      return this.targets[index];
+    }
+    else {
+      return -1;
+    }
   }
 
   this.todaysTarget = function(){
@@ -48,9 +53,7 @@ var Tracker = function(){
   }
 
   this.addPushups = function(num){
-
-    this.todaysTarget().tracked += parseInt(num);
-    console.log(this.todaysTarget)
+    this.todaysTarget().addPushups(parseInt(num));
     return this.todaysTarget();
   }
 

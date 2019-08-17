@@ -12,6 +12,14 @@ var Target = function(day,number){
   this.number = number;
   this.tracked = 0;
   this.dayNum = weekday[day];
+
+  this.addPushups = function(pushups){
+    if(this.tracked + pushups < 0)
+      this.tracked =  0;
+    else
+      this.tracked += pushups;
+    return this.tracked;
+  }
 };
 
-module.exports= Target;
+module.exports = Target;
