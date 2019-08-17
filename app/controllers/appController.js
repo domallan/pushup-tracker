@@ -18,8 +18,11 @@ exports.getTracker = function(req,res){
   res.send(tracker);
 }
 
-exports.listTargets = function(req,res){
+exports.addTracker = function(req,res){
+  res.send(app.addTracker(new Tracker()));
+}
 
+exports.listTargets = function(req,res){
   res.send(app.trackers[req.params.tracker_index].getTargets());
 }
 
@@ -29,6 +32,13 @@ exports.getTarget = function(req,res){
   res.send(target);
 }
 
+exports.addTarget = function(req,res){
+  var index = req.params.tracker_index;
+  var day = req.query.day;
+  var number = parseInt(req.query.number);
+  res.send(app.addTarget(index,day,number));
+}
+
 exports.todaysTarget = function(req,res){
     res.send(app.trackers[0].todaysTarget());
 }
@@ -36,6 +46,6 @@ exports.todaysTarget = function(req,res){
 exports.addPushups = function(req,res){
   console.log(req.query);
   var numPushups = req.query.num;
-  
+
   res.send(app.getItemByIndex(req.params.tracker_index).addPushups(numPushups));
 }

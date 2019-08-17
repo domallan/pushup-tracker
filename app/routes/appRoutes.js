@@ -6,7 +6,8 @@ module.exports = function(app) {
   //    .get(appTracker.listTrackers)
   //    .post(appTracker.addPushups);
   app.route('/trackers/')
-    .get(appTracker.listTrackers);
+    .get(appTracker.listTrackers)
+    .post(appTracker.addTracker);
 
   app.route('/trackers/:tracker_index')
     .get(appTracker.getTracker)
@@ -16,7 +17,8 @@ module.exports = function(app) {
      .get(appTracker.todaysTarget);
 
  app.route('/trackers/:tracker_index/targets')
-    .get(appTracker.listTargets);
+    .get(appTracker.listTargets)
+    .post(appTracker.addTarget);
 
   app.route('/trackers/:tracker_index/targets/:target_index')
      .get(appTracker.getTarget);

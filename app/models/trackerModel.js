@@ -7,8 +7,22 @@ var Tracker = function(){
   console.log("New tracker creates: " + this.name + " at " + this.created_at)
 
   this.addTarget = function(day, number){
+    var exists = false;
     var aTarget = new Target(day,number);
-    this.targets.push(aTarget);
+    for (var i = 0; i < this.targets.length;i++){
+      if(aTarget.dayNum == this.targets[i].dayNum){
+        exists = true;
+        break;
+      }
+    }
+    if(exists){
+      return null;
+    }
+    else{
+      this.targets.push(aTarget);
+      return this.targets[this.targets.length-1];
+    }
+    return null;
   };
   this.getTargets = function(){
     return this.targets;
