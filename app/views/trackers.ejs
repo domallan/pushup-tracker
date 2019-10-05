@@ -1,0 +1,32 @@
+<%- include('./partials/header') %>
+
+<% data.forEach(function(result){ %>
+  <div class='container'>
+  <h3><%= result.key.user %></h3>
+  <p><%= result.key.name %></p>
+
+  <% if(typeof result.value != 'undefined' && result.value != null){ %>
+    <div class='table-responsive-sm'>
+    <table class='table table-striped table-hover table-sm'>
+      <thead class='thead-light'>
+      <tr>
+        <th class='col'>Day</th>
+        <th class='col'>Target</th>
+        <th class='col'>Tracked</th>
+      </tr>
+      </thead>
+      <tbody>
+    <% result.value.targets.forEach(function(target){ %>
+      <tr>
+        <td><%= target.day %></td>
+        <td><%= target.number %></td>
+        <td><%= target.tracked %></td>
+      </tr>
+    <% }); %>
+    </tbody>
+    </table>
+    </div>
+  <% } %>
+  </div>
+<% }); %>
+<%- include('./partials/footer') %>

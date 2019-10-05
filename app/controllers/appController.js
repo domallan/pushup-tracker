@@ -1,51 +1,69 @@
 'use strict';
-var App = require('../models/appModel');
-var Tracker = require('../models/trackerModel');
-const app = new App();
+
+const Tracker = require('../models/trackerModel');
+const db = require('../models/dbModel');
+const dbname = 'pushup-tracker';
+const err = require('../models/errorModel')
 var tracker = new Tracker();
 
-tracker.addTarget("Sunday",100);
-tracker.addTarget("Monday",100);
-tracker.addTarget("Tuesday",150);
-app.addTracker(tracker);
+module.exports = function(app){
+  app.trackers = [];
 
-exports.listTrackers = function(req,res){
-  res.send(app.getTrackers());
-}
+  app.addTracker = function(req,res){
+    var tracker = new Tracker();
+    this.trackers.push(tracker);
+    res.send(tracker);
+  }
 
-exports.getTracker = function(req,res){
-  var tracker = app.getItemByIndex(req.params.tracker_index);
-  res.send(tracker);
-}
+  app.addTargetItem = function(tracker_index,day,number){
+    var newTarget = this.trackers[tracker_index].addTarget(day,number);
+    if (newTarget == null){
+      return 'Target already exists';
+    }
+    else {
+      return newTarget;
+    }
+  }
 
-exports.addTracker = function(req,res){
-  res.send(app.addTracker(new Tracker()));
-}
+  app.getTrackers = function(viewUrl){
+    return db.getRequest(viewUrl);
+  }
+  app.getItemByIndex = function(index){
+    return this.trackers[index];
+  }
 
-exports.listTargets = function(req,res){
-  res.send(app.trackers[req.params.tracker_index].getTargets());
-}
+  app.listTrackers = function(req,res){
+    var viewUrl = '_design/trackers/_view/trackers/';
+    // res.render('trackers');
+    db.get(dbname,viewUrl).then(({data, header, status}) =>{
+        console.log(data.rows[1]);
+        res.render('trackers',{data:data.rows});
+      },err => {
+        res.send(err);
+      }
+    ).catch(err.errorHandler);
+  }
 
-exports.getTarget = function(req,res){
-  var tracker = app.getItemByIndex(req.params.tracker_index);
-  var target = tracker.getItemByIndex(req.params.target_index)
-  res.send(target);
-}
+  app.getTracker = function(req,res){
+    var tracker = this.getItemByIndex(req.params.tracker_index);
+    res.send(tracker);
+  }
 
-exports.addTarget = function(req,res){
-  var index = req.params.tracker_index;
-  var day = req.query.day;
-  var number = parseInt(req.query.number);
-  res.send(app.addTarget(index,day,number));
-}
+  app.listTargets = function(req,res){
+    res.send(this.trackers[req.params.tracker_index].getTargets());
+  }
 
-exports.todaysTarget = function(req,res){
-    res.send(app.trackers[0].todaysTarget());
-}
+  app.addTarget = function(req,res){
+    var index = req.params.tracker_index;
+    var day = req.query.day;
+    var number = parseInt(req.query.number);
+    res.send(this.addTargetItem(index,day,number));
+  }
 
-exports.addPushups = function(req,res){
-  console.log(req.query);
-  var numPushups = req.query.num;
+  app.getTarget = function(req,res){
+    var tracker = this.getItemByIndex(req.params.tracker_index);
+    var target = tracker.getItemByIndex(req.params.target_index)
+    res.send(target);
+  }
 
-  res.send(app.getItemByIndex(req.params.tracker_index).addPushups(numPushups));
 }

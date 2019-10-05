@@ -1,10 +1,10 @@
 var Target = require('./targetModel')
 
-var Tracker = function(){
+const Tracker = function(){
   this.name = "My Tracker";
   this.targets = [];
   this.created_at = new Date();
-  console.log("New tracker creates: " + this.name + " at " + this.created_at)
+  console.log("New tracker created: " + this.name + " at " + this.created_at)
 
   this.addTarget = function(day, number){
     var exists = false;
@@ -58,4 +58,4 @@ var Tracker = function(){
   }
 
 };
-module.exports= Tracker;
+module.exports = Tracker;
